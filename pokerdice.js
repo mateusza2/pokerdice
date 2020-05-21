@@ -38,12 +38,14 @@ document.querySelector( "#rzut" ).addEventListener( "click", function(){
         }
     }
     odswiez_kosci()
-    if ( Licznik_rzutow[ Kolej_gracza ] == 3 ){
-        Kolej_gracza = [1,0][ Kolej_gracza ]
-
-        /* Kolej_gracza = 1 - Kolej_gracza
-        Kolej_gracza = Kolej_gracza ^ 1
-        Kolej_gracza ^= 1 */
+    if ( Licznik_rzutow[ Kolej_gracza ] == 3){
+        if ( Kolej_gracza == 0 ){
+            Kolej_gracza = 1
+        }
+        else {
+            policz_punkty()
+            console.log( Male_punkty )
+        }
 
     }
 } )
@@ -108,36 +110,25 @@ function czy_pair( kp ){
     return ( kp.indexOf( 2 ) >= 0 );
 }
 
-function  policz_punkty(obliczane){
+function  policz_punkty(){
     for (var i = 0; i<2; i++){
-        x = policz_kosci(Kosci_gracza[i])
-        if (czy_five(x)){
-            Male_punkty[i] += 7
-            console.log(Male_punkty)
-        } else if (czy_four(x)){
-            Male_punkty[i] += 6
-            console.log(Male_punkty)
-        } else if (czy_full(x)){
-            Male_punkty[i] += 5
-            console.log(Male_punkty)
-        } else if (czy_str(x)){
-            Male_punkty[i] += 4
-            console.log(Male_punkty)
-        } else if (czy_three(x)){
-            Male_punkty[i] += 3
-            console.log(Male_punkty)
-        } else if (czy_double_pair(x)){
-            Male_punkty[i] += 2
-            console.log(Male_punkty)
-        } else if (czy_pair(x)){
-            Male_punkty[i] += 1
-            console.log(Male_punkty)
+        var policzone = policz_kosci(Kosci_gracza[i])
+        if (czy_five(policzone)){
+            Male_punkty[i] = 7
+        } else if (czy_four(policzone)){
+            Male_punkty[i] = 6
+        } else if (czy_full(policzone)){
+            Male_punkty[i] = 5
+        } else if (czy_str(policzone)){
+            Male_punkty[i] = 4
+        } else if (czy_three(policzone)){
+            Male_punkty[i] = 3
+        } else if (czy_double_pair(policzone)){
+            Male_punkty[i] = 2
+        } else if (czy_pair(policzone)){
+            Male_punkty[i] = 1
         } else {
             Male_punkty[i] = 0
-            console.log(Male_punkty)
-         
-
         }
-
     }
 }
