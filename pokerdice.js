@@ -10,21 +10,22 @@ function odswiez_kosci(){
             var id = "#p" + p + "d" + d
             document.querySelector( id ).textContent = Kosci_gracza[ p ][ d ]
             document.querySelector( id ).className = "poker" + Kosci_gracza[ p ][ d ]
-            document.querySelector( id ).addEventListener( "click", function(e){
-                var p = e.target.id[ 1 ]
-                var d = e.target.id[ 3 ]
-                if ( Kosci_gracza[ p ][ d ] == '-' ){
-                    return
-                }
-                if ( p != Kolej_gracza ){
-                    return
-                }
-                Kosci_gracza[ p ][ d ] = "-"
-                odswiez_kosci()
-            } )
         }
     }
 
+}
+
+function kostka_klik( e ){
+    var p = e.target.id[ 1 ]
+    var d = e.target.id[ 3 ]
+    if ( Kosci_gracza[ p ][ d ] == '-' ){
+        return
+    }
+    if ( p != Kolej_gracza ){
+        return
+    }
+    Kosci_gracza[ p ][ d ] = "-"
+    odswiez_kosci()
 }
 
 
@@ -47,6 +48,12 @@ document.querySelector( "#rzut" ).addEventListener( "click", function(){
     }
 } )
 
+for ( var p = 0; p < 2; p++ ){
+    for ( var d = 0; d < 5; d++ ){
+        var id = "#p" + p + "d" + d
+        document.querySelector( id ).addEventListener( "click", kostka_klik )
+    }
+}
 
 
 var Stan_gry = "start"
@@ -57,4 +64,46 @@ var Kosci_gracza = [
     [ '-', '-', '-', '-', '-' ],
     [ '-', '-', '-', '-', '-' ]
 ]
+
+var pozycje = {
+    "A" : 0, "K" : 1, "Q" : 2, "J" : 3, "T" : 4, "9" : 5
+}
+
+function policz_kosci( kosci ){
+    var wynik = [0,0,0,0,0,0]
+    for ( var i = 0; i < 5; i ++ ){
+        wynik[ pozycje[ kosci[ i ] ] ]++
+    }
+    return wynik
+}
+
+function czy_five( kp ){
+    return ( kp.indexOf( 5 ) >= 0 );
+}
+
+function czy_four( kp ){
+    return ( kp.indexOf( 4 ) >= 0 );
+}
+
+function czy_full( kp ){
+    return ( kp.indexOf( 3 ) >= 0 ) && ( kp.indexOf( 2 ) >= 0 );
+//    return czy_three( kp ) && czy_pair( kp )
+}
+
+function czy_str( kp ){
+    return (kp.join("") == "111110") || (kp.join("") == "011111")
+}
+
+function czy_three( kp ){
+    return ( kp.indexOf( 3 ) >= 0 );
+    //return kp.filter( function(x){ return x==3 } ).length == 1 
+}
+
+function czy_double_pair( kp ){
+    return kp.filter( function(x){ return x==2 } ).length == 2 
+}
+
+function czy_pair( kp ){
+    return ( kp.indexOf( 2 ) >= 0 );
+}
 
