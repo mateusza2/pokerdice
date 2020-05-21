@@ -38,12 +38,14 @@ document.querySelector( "#rzut" ).addEventListener( "click", function(){
         }
     }
     odswiez_kosci()
-    if ( Licznik_rzutow[ Kolej_gracza ] == 3 ){
-        Kolej_gracza = [1,0][ Kolej_gracza ]
-
-        /* Kolej_gracza = 1 - Kolej_gracza
-        Kolej_gracza = Kolej_gracza ^ 1
-        Kolej_gracza ^= 1 */
+    if ( Licznik_rzutow[ Kolej_gracza ] == 3){
+        if ( Kolej_gracza == 0 ){
+            Kolej_gracza = 1
+        }
+        else {
+            policz_punkty()
+            console.log( Male_punkty )
+        }
 
     }
 } )
@@ -58,6 +60,7 @@ for ( var p = 0; p < 2; p++ ){
 
 var Stan_gry = "start"
 var Punkty = [ 0, 0 ]
+var Male_punkty = [ 0, 0 ]
 var Kolej_gracza = 0
 var Licznik_rzutow = [0,0]
 var Kosci_gracza = [
@@ -107,3 +110,25 @@ function czy_pair( kp ){
     return ( kp.indexOf( 2 ) >= 0 );
 }
 
+function  policz_punkty(){
+    for (var i = 0; i<2; i++){
+        var policzone = policz_kosci(Kosci_gracza[i])
+        if (czy_five(policzone)){
+            Male_punkty[i] = 7
+        } else if (czy_four(policzone)){
+            Male_punkty[i] = 6
+        } else if (czy_full(policzone)){
+            Male_punkty[i] = 5
+        } else if (czy_str(policzone)){
+            Male_punkty[i] = 4
+        } else if (czy_three(policzone)){
+            Male_punkty[i] = 3
+        } else if (czy_double_pair(policzone)){
+            Male_punkty[i] = 2
+        } else if (czy_pair(policzone)){
+            Male_punkty[i] = 1
+        } else {
+            Male_punkty[i] = 0
+        }
+    }
+}
