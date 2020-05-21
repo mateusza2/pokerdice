@@ -58,6 +58,7 @@ for ( var p = 0; p < 2; p++ ){
 
 var Stan_gry = "start"
 var Punkty = [ 0, 0 ]
+var Male_punkty = [ 0, 0 ]
 var Kolej_gracza = 0
 var Licznik_rzutow = [0,0]
 var Kosci_gracza = [
@@ -107,3 +108,36 @@ function czy_pair( kp ){
     return ( kp.indexOf( 2 ) >= 0 );
 }
 
+function  policz_punkty(obliczane){
+    for (var i = 0; i<2; i++){
+        x = policz_kosci(Kosci_gracza[i])
+        if (czy_five(x)){
+            Male_punkty[i] += 7
+            console.log(Male_punkty)
+        } else if (czy_four(x)){
+            Male_punkty[i] += 6
+            console.log(Male_punkty)
+        } else if (czy_full(x)){
+            Male_punkty[i] += 5
+            console.log(Male_punkty)
+        } else if (czy_str(x)){
+            Male_punkty[i] += 4
+            console.log(Male_punkty)
+        } else if (czy_three(x)){
+            Male_punkty[i] += 3
+            console.log(Male_punkty)
+        } else if (czy_double_pair(x)){
+            Male_punkty[i] += 2
+            console.log(Male_punkty)
+        } else if (czy_pair(x)){
+            Male_punkty[i] += 1
+            console.log(Male_punkty)
+        } else {
+            Male_punkty[i] = 0
+            console.log(Male_punkty)
+         
+
+        }
+
+    }
+}
