@@ -12,6 +12,11 @@
     .controls { grid-area: 2 / 2 / 3 / 3; }
     .points { grid-area: 3 / 1 / 4 / 4; } 
 
+    div.points {
+	    font-size: 50pt;
+	    text-align: center;
+    }
+
     .player1 button,
     .player2 button {
         font-size: 40pt;
