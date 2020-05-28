@@ -1,6 +1,6 @@
 
 function rzut_kostka(){
-    var poker = [ 'A', 'K', 'Q', 'J', 'T', '9'   ]
+    var poker = [ '9','T','J','Q','K','A' ]
     return poker[ Math.floor( Math.random() * 6 ) ]
 }
 
@@ -43,7 +43,8 @@ document.querySelector( "#rzut" ).addEventListener( "click", function(){
             Kolej_gracza = 1
         }
         else {
-            policz_punkty()
+	    Male_punkty[0] = policz_punkty( Kosci_gracza[0] )
+	    Male_punkty[1] = policz_punkty( Kosci_gracza[1] )
             console.log( Male_punkty )
         }
 
@@ -69,7 +70,7 @@ var Kosci_gracza = [
 ]
 
 var pozycje = {
-    "A" : 0, "K" : 1, "Q" : 2, "J" : 3, "T" : 4, "9" : 5
+    "9" : 0, "T" : 1, "J" : 2, "Q" : 3, "K" : 4, "A" : 5
 }
 
 function policz_kosci( kosci ){
@@ -110,25 +111,38 @@ function czy_pair( kp ){
     return ( kp.indexOf( 2 ) >= 0 );
 }
 
-function  policz_punkty(){
-    for (var i = 0; i<2; i++){
-        var policzone = policz_kosci(Kosci_gracza[i])
-        if (czy_five(policzone)){
-            Male_punkty[i] = 7
-        } else if (czy_four(policzone)){
-            Male_punkty[i] = 6
-        } else if (czy_full(policzone)){
-            Male_punkty[i] = 5
-        } else if (czy_str(policzone)){
-            Male_punkty[i] = 4
-        } else if (czy_three(policzone)){
-            Male_punkty[i] = 3
-        } else if (czy_double_pair(policzone)){
-            Male_punkty[i] = 2
-        } else if (czy_pair(policzone)){
-            Male_punkty[i] = 1
-        } else {
-            Male_punkty[i] = 0
-        }
+function policz_punkty( kosci ){
+    var wynik
+    var policzone = policz_kosci( kosci )
+    if (czy_five(policzone)){
+        wynik = 700000 + policzone.indexOf( 5 ) 
+    } else if (czy_four(policzone)){
+        wynik = 600000 + policzone.indexOf( 4 ) * 10 + policzone.indexOf( 1 )
+    } else if (czy_full(policzone)){
+        wynik = 500000 + policzone.indexOf( 3 ) * 10 + policzone.indexOf( 2 )
+    } else if (czy_str(policzone)){
+        wynik = 400000 + policzone[5]
+    } else if (czy_three(policzone)){
+        var temp = policzone
+            .map( function( liczba, wartosc ){ return [ liczba, wartosc ] } )
+            .filter( function(x){ return x[0] == 1 } )
+        wynik = 300000 + policzone.indexOf(3) * 100 + temp[1][1] * 10 + temp[0][1]
+    } else if (czy_double_pair(policzone)){
+        var temp = policzone
+            .map( function( liczba, wartosc ){ return [ liczba, wartosc ] } )
+            .filter( function(x){ return x[0] == 2 } )
+        wynik = 200000 + temp[1][1] * 100 + temp[0][1] * 10 + policzone.indexOf(1)
+    } else if (czy_pair(policzone)){
+        var temp = policzone
+            .map( function( liczba, wartosc ){ return [ liczba, wartosc ] } )
+            .filter( function(x){ return x[0] == 1 } )
+        wynik = 100000 + policzone.indexOf(2) * 1000 + temp[2][1] * 100 + temp[1][1] * 10 + temp[0][1]
+    } else {
+        var temp = policzone
+            .map( function( liczba, wartosc ){ return [ liczba, wartosc ] } )
+            .filter( function(x){ return x[0] == 1 } )
+        wynik = temp[4][1] * 10000 + temp[3][1] * 1000 + temp[2][1] * 100 + temp[1][1] * 10 + temp[0][1]
     }
+    return wynik
 }
+
