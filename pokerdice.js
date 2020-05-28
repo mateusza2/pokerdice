@@ -12,6 +12,7 @@ function odswiez_kosci(){
             document.querySelector( id ).className = "poker" + Kosci_gracza[ p ][ d ]
         }
     }
+    document.querySelector('.points').textContent = Punkty[0] + ':' + Punkty[1]
 
 }
 
@@ -41,11 +42,24 @@ document.querySelector( "#rzut" ).addEventListener( "click", function(){
     if ( Licznik_rzutow[ Kolej_gracza ] == 3){
         if ( Kolej_gracza == 0 ){
             Kolej_gracza = 1
+	    Licznik_rzutow[ 1 ] = 0
+	    Kosci_gracza[1] = [ '-', '-', '-', '-', '-' ]
+	    odswiez_kosci()
         }
         else {
 	    Male_punkty[0] = policz_punkty( Kosci_gracza[0] )
 	    Male_punkty[1] = policz_punkty( Kosci_gracza[1] )
-            console.log( Male_punkty )
+
+            if ( Male_punkty[0] > Male_punkty[1] ){
+                Punkty[0]++;
+	    }
+	    else if ( Male_punkty[1] > Male_punkty[0] ) {
+	        Punkty[1]++;
+            }
+            Kolej_gracza = 0
+            Kosci_gracza[0] = [ '-', '-', '-', '-', '-' ]
+	    Licznik_rzutow[ 0 ] = 0
+	    odswiez_kosci()
         }
 
     }
