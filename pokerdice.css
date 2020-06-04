@@ -17,10 +17,20 @@
 	    text-align: center;
     }
 
+    h1 {
+	    text-align: center;
+    }
+
+    .player1,
+    .player2 {
+	    text-align: center;
+    }
+
     .player1 button,
     .player2 button {
         font-size: 40pt;
         background-color: #fed;
+        width: 70px;
     }
 
     button.pokerA {
